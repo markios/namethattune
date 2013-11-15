@@ -5,7 +5,7 @@ A hack day, or rather weekend I did recently.
 
 Its messy but has some nice little features some people may find useful and want to start their own projects off. 
 
-#FEATURES
+##FEATURES
 
 1. Cool avatar creator which allows you to take a picture of yourself with your web cam and upload it to the server.
 2. Chat Room.

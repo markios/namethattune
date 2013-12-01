@@ -1,0 +1,102 @@
+.fadeIn-frames() {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+@-webkit-keyframes fadeIn {.fadeIn-frames}
+@-moz-keyframes fadeIn {.fadeIn-frames}
+@-ms-keyframes fadeIn {.fadeIn-frames}
+@-o-keyframes fadeIn {.fadeIn-frames}
+@keyframes fadeIn {.fadeIn-frames}
+
+
+
+.animation-timing-function(@function) {
+    -webkit-animation-timing-function: @function;
+    -moz-animation-timing-function: @function;
+    -ms-animation-timing-function: @function;
+    -o-animation-timing-function: @function;
+    animation-timing-function: @function;
+}
+
+.animation-delay(@delay) {
+   -webkit-animation-delay: @delay;
+   -moz-animation-delay: @delay;
+   -ms-animation-delay: @delay;
+   -o-animation-delay: @delay;
+   animation-delay: @delay;
+}
+
+.animation-name(@name) {
+    -webkit-animation-name: @name;
+    -moz-animation-name: @name;
+    -ms-animation-name: @name;
+    -o-animation-name: @name;
+    animation-name: @name;
+}
+
+.animation-direction(@direction) {
+    -webkit-animation-direction: @direction;
+    -moz-animation-direction: @direction;
+    -ms-animation-direction: @direction;
+    -o-animation-direction: @direction;
+    animation-direction: @direction;
+}
+
+.animation-iterations(@iteration) {
+   animation-iteration-count: @iteration;
+   -ms-animation-iteration-count: @iteration;
+   -webkit-animation-iteration-count: @iteration; 
+}
+
+.animation-fill-direction(@direction) {
+   -webkit-animation-fill-mode: @direction;
+   animation-fill-mode : @direction
+}
+
+.translate-x(@x) {
+    -webkit-transform: translateX(@x);
+    -moz-transform: translateX(@x);
+    -ms-transform: translateX(@x);
+    -o-transform: translateX(@x);
+    transform: translateX(@x);
+}
+
+.translate(@x) {
+    -webkit-transform: @x;
+    -moz-transform: @x;
+    -ms-transform: @x;
+    -o-transform: @x;
+    transform: @x;
+}
+
+.translate-origin(@from, @to) {
+    -webkit-transform-origin: @from @to;
+    -moz-transform-origin: @from @to;
+    -ms-transform-origin: @from @to;
+    -o-transform-origin: @from @to;
+    transform-origin: @from @to;
+}
+
+.translate(@translate) {
+    -webkit-transform: @translate;
+    -moz-transform: @translate;
+    -ms-transform: @translate;
+    -o-transform: @translate;
+    transform: @translate;
+}
+
+.transistion-all(@duration, @delay : 0s) {
+    transition: all @duration @delay;
+    /*browser specific versions*/
+    -moz-transition: all @duration @delay;
+    -ms-transition: all @duration @delay;
+    -webkit-transition: all @duration @delay;
+    -o-transition: all @duration @delay; 
+}
+.animation-duration(@duration) {
+    -webkit-animation-duration: @duration;
+    -moz-animation-duration: @duration;
+    -ms-animation-duration: @duration;
+    -o-animation-duration: @duration;
+    animation-duration: @duration;
+}

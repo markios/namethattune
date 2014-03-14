@@ -81,7 +81,14 @@ s.sockets.on('connection', function (socket) {
         if(! currentGame.allAnswersIn()) return;
 
         nextQuestion = currentGame.nextQuestion();
-        if(nextQuestion) s.sockets.emit('game_proceed', nextQuestion);
+
+        if(!nextQuestion) return;
+
+        s.sockets.emit('round_over');
+        setTimeout(function(){
+            s.sockets.emit('game_proceed', nextQuestion);
+            
+        }, 5000);
     });
 
     socket.on('chat', function(message){

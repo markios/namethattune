@@ -454,7 +454,7 @@ table.link-type {
   margin-left: -25%;
 }
 .funny-pic img {
-  opacity: 0;
+  display:none;
 }
 input[type="text"] {
   font-size: 1.6em;

@@ -20,6 +20,7 @@
             'disco' : 'http://s3-ec.buzzfed.com/static/enhanced/terminal05/2012/9/8/17/anigif_enhanced-buzz-5303-1347139716-5.gif',
             'chineselady' : 'http://24.media.tumblr.com/0b28d1bee4a0c68998abc15dab10cb53/tumblr_mftq7seB1C1rex97yo1_250.gif',
             'bob' : 'http://media.giphy.com/media/COn3OThVtaq1W/giphy.gif',
+            'get_lucky' : 'http://media.giphy.com/media/mRknlUA0mux8s/giphy.gif',
             'will' : 'http://stream1.gifsoup.com/view5/4650025/will-i-am-o.gif',
             'punk' : 'http://31.media.tumblr.com/tumblr_lm59o0Ch6k1qj73e2o1_400.gif'
 
@@ -127,6 +128,10 @@
        });
     };
 
+    var questionsSet = {};
+
+    var currentQuestionNumber = 0;
+
     var setChat = function(){
           var message = $chatInput.val();
 
@@ -143,9 +148,16 @@
        $game.html(_.template(questionTemplate, game));
        var $buttons = $game.find('button');
        if(game.picture) {
-          $funnyPic.append('<img class="fadeIn" src="{pic}">'.replace('{pic}', funnyPics[game.picture]));
+          $funnyPic.append('<img src="{pic}">'.replace('{pic}', funnyPics[game.picture]));
+
+          setTimeout(function(){
+              $funnyPic.find('img').fadeIn('slow');
+          }, 5000);
        }
        $buttons.click(function(e){
+
+          if(questionsSet[currentQuestionNumber]) return;
+
           var guess = $(e.currentTarget),
               guessIndex = +guess.attr('data-rel'),
               isRight = game.correct === guessIndex;
@@ -153,6 +165,8 @@
           guess.css('color', isRight ? '#54A545' : '#D35B8D');
           $game.find('.how-i-did').html(isRight ? winning[getRandom()] : rubbish[getRandom()]);
           if(! isRight) $($buttons.get(game.correct)).css('color', '#54A545');
+
+          questionsSet[currentQuestionNumber] = true;
 
           setTimeout(function(){
             socket.emit('guess', {result : +guess.attr('data-rel'), playerId : me.id });
@@ -165,6 +179,10 @@
        else {
          nextSong(game.songId);
        }
+    };
+
+    var getReadyForNextRound = function(){
+        $game.html(_.template(getReadyTemplate));
     };
 
     var registerUser = function(userName, picture){
@@ -186,7 +204,7 @@
           });
 
           socket.on('p_ready', function(p){
-            $players.find('#' + p.id).addClass('ready');
+              $players.find('#' + p.id).addClass('ready');
           });
 
           socket.on('new_chat_message', function(message){
@@ -194,9 +212,12 @@
               $chatContent.animate({ scrollTop: $chatContent.prop("scrollHeight") - $chatContent.height() }, 500);
           });
 
-
+          socket.on('round_over', function(game){
+              getReadyForNextRound();
+          });
 
           socket.on('game_proceed', function(game){
+             currentQuestionNumber +=1;
              showQuestion(game);
           });
 
@@ -239,6 +260,9 @@
       '    <%});%>' +
       '    <div class="how-i-did"></div>' +
       '</div>';
+
+    var getReadyTemplate = 
+      '<h3>Get ready for the next question</h3>';
 
     var chatTemplate =
       '<div><span style="color:<%=playerColour%>" class="who"><%=playerName%> : </span><span class="what"><%=message%></span></div>';
